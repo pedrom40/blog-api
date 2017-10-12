@@ -10,12 +10,10 @@ chai.use(chaiHttp);
 
 describe('Blog Posts', function() {
 
-  // start server for tests
   before(function() {
     return runServer();
   });
 
-  // close server when done
   after(function() {
     return closeServer();
   });
