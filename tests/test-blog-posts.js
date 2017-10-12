@@ -2,7 +2,6 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 
-// import server
 const {app, runServer, closeServer} = require('../server');
 const should = chai.should();
 
