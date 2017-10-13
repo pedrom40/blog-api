@@ -46,24 +46,22 @@ describe('Blog Posts', function() {
   //  1. make a POST request with data for a new item
   //  2. inspect response object and prove it has right status code and that the returned object has an `id`
   it('should add a blog post on POST', function() {
-    const newPost = {
-      title: 'Lorem ip some',
-      content: 'foo foo foo foo',
-      author: 'Emma Goldman'
-    };
-    const expectedKeys = ['id', 'publishDate'].concat(Object.keys(newPost));
-
+    const newItem = {title: 'New Post', content: 'Cool post content', author:'Hello World'};
     return chai.request(app)
       .post('/blog-posts')
-      .send(newPost)
+      .send(newItem)
       .then(function(res) {
         res.should.have.status(201);
         res.should.be.json;
-        res.body.should.be.a('object');
-        res.body.should.have.all.keys(expectedKeys);
-        res.body.title.should.equal(newPost.title);
-        res.body.content.should.equal(newPost.content);
-        res.body.author.should.equal(newPost.author)
+
+        // response should be deep equal to `newItem` from above if we assign `id` to it from `res.body.id`
+        res.body.should.deep.equal(
+          Object.assign(newItem, {
+            id: res.body.id,
+            publishDate: res.body.publishDate
+          })
+        );
+
       });
   });
 
